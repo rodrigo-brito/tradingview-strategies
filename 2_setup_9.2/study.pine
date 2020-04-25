@@ -1,0 +1,53 @@
+//@version=4
+study("Setup 9.2", overlay = true)
+
+ema8 = ema(close, input(8))
+ema9 = ema(close, input(9))
+ema13 = sma(close, input(13))
+ema54 = sma(close, input(54))
+ema200 = sma(close, input(200))
+sma20 = sma(close, input(20))
+
+plot(ema9, color=color.red)
+plot(sma20)
+
+var INF = 9999999.9
+var position = false
+var active = false
+var buy_price = INF
+var stop_price = 0.0
+
+if (ema9[0] < ema9[1] and active)
+    buy_price := INF
+    stop_price := 0.0
+    active := false
+    position := false
+
+if (not position and close < low[1] and ema9[0] > ema9[1])
+    buy_price := high[0]
+    stop_price := low[0]
+    active := true
+
+if (position and low < stop_price)
+    label.new(bar_index, na, yloc=yloc.abovebar, text="STOP", color=color.red, style=label.style_labeldown)
+    buy_price := INF
+    stop_price := 0.0
+    active := false
+    position := false
+    
+if (position and close < sma20)
+    label.new(bar_index, na, yloc=yloc.abovebar, text="SELL", color=color.red, style=label.style_labeldown)
+    buy_price := INF
+    stop_price := 0.0
+    active := false
+    position := false
+
+if (active and high > buy_price and ema9 > sma20)
+    label.new(bar_index, na, yloc=yloc.belowbar, text="9.2", color=color.green,  style=label.style_labelup)
+    stop_price := min(low[0], stop_price)
+    position := true
+    active := false
+else
+    if(active)
+        buy_price := min(high[0], buy_price)
+        stop_price := min(low[0], stop_price)
