@@ -1,5 +1,5 @@
 //@version=4
-strategy("Scalping 3EMA", overlay=true)
+strategy("Scalping 3EMA - brito.com.br", overlay=true)
 
 var INF = 99999999
 var entry_price = INF

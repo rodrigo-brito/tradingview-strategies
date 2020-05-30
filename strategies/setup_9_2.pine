@@ -1,5 +1,5 @@
 //@version=4
-study("Setup 9.2", overlay = true)
+strategy("Setup 9.2 - Larry Willians", overlay=true)
 
 ema8 = ema(close, input(8))
 ema9 = ema(close, input(9))
@@ -29,21 +29,21 @@ if (not position and close < low[1] and ema9[0] > ema9[1])
     active := true
 
 if (position and low < stop_price)
-    label.new(bar_index, na, yloc=yloc.abovebar, text="STOP", color=color.red, style=label.style_labeldown)
+    strategy.close("long", comment="stop")
     buy_price := INF
     stop_price := 0.0
     active := false
     position := false
     
 if (position and close < sma20)
-    label.new(bar_index, na, yloc=yloc.abovebar, text="SELL", color=color.red, style=label.style_labeldown)
+    strategy.close("long", comment="sma sell")
     buy_price := INF
     stop_price := 0.0
     active := false
     position := false
 
 if (active and high > buy_price and ema9 > sma20)
-    label.new(bar_index, na, yloc=yloc.belowbar, text="9.2", color=color.green,  style=label.style_labelup)
+    strategy.entry("long", strategy.long)
     stop_price := min(low[0], stop_price)
     position := true
     active := false

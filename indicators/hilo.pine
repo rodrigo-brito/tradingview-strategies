@@ -1,5 +1,5 @@
 //@version=4
-strategy("HiLo Tranquilo - brito.com.br", overlay=true)
+study("HiLo Activator - brito.com.br", overlay=true)
 
 // inputs
 period = input(3, "HiLo Period")
@@ -22,10 +22,3 @@ if (direction == -1 and close > max)
 dot_color = direction[0] == 1 ? color.green : color.red
 dot_position = direction[0] == 1 ? min[0] : max[0]
 plotchar(dot_position, char=".", location=location.absolute, color=dot_color, size=size.tiny)
-
-
-if (macdLine >= signalLine and macdLine > macdLine[1] and direction == 1)
-    strategy.entry("long", strategy.long)
-
-if (direction == -1)
-    strategy.close("long")

@@ -1,6 +1,6 @@
-# tradeview-strategies
+# tradingview-strategies
 
-Studies and strategies for TradeView in Pine. Use at your own risk, I will not be responsible for your losses.
+Studies and strategies for TradingView in Pine. Use at your own risk, I will not be responsible for your losses.
 
 ## Larry Willians - 9.2 Setup
 
