@@ -1,0 +1,32 @@
+//@version=4
+strategy("HiLo Tranquilo", overlay=true)
+
+// inputs
+period = input(3, "HiLo Period")
+shift = input(1, "HiLo Shift")
+
+// indicators
+[macdLine, signalLine, histLine] = macd(close, 12, 26, 9)
+max = ema(high[shift], period)
+min = ema(low[shift], period)
+
+// initialize direction
+var direction = close < min ? -1 : 1
+
+if (direction == 1 and close < min)
+    direction := -1
+
+if (direction == -1 and close > max)
+    direction := 1
+
+dot_color = direction[0] == 1 ? color.green : color.red
+dot_position = direction[0] == 1 ? min[0] : max[0]
+plotchar(dot_position, char=".", location=location.absolute, color=dot_color, size=size.tiny)
+
+
+if (macdLine >= signalLine and macdLine > macdLine[1] and direction == 1)
+    strategy.entry("long", strategy.long)
+
+if (direction == -1)
+    strategy.close("long")
+
